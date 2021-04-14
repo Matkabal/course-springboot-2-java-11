@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.matkabal.course.entities.User;
 import com.matkabal.course.repositories.UserRepository;
+import com.matkabal.course.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -22,8 +23,8 @@ public class UserService {
 	}
 	
 	public User findById(Long id) {
-		Optional<User> obj =  repository.findById(id);
-		return obj.get();
+		Optional<User> obj = repository.findById(id);
+		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 
 	public User insert(User obj) {
